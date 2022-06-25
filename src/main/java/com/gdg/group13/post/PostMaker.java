@@ -31,13 +31,3 @@ public class PostMaker {
 }
 
 
-@Getter
-class PostMakeRequestDto {
-  public Integer uid;
-  public String title;
-  public String imgUrl;
-  public String description;
-  public List<Integer> taskIdList;
-}
-
-

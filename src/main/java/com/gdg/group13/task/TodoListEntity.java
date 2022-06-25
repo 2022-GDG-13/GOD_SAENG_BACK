@@ -23,4 +23,11 @@ public class TodoListEntity {
 
   private LocalDate date;
 
+  public void changeTrue() {
+    this.godSaeng = true;
+  }
+
+  public void changeFalse() {
+    this.godSaeng = false;
+  }
 }

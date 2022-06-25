@@ -1,4 +1,4 @@
-package com.gdg.group13.common;
+package com.gdg.group13.common.s3;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;

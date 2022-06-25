@@ -1,7 +1,8 @@
-package com.gdg.group13.common;
+package com.gdg.group13.common.s3;
 
+import com.gdg.group13.common.ResponseDto;
+import com.gdg.group13.common.ResponseUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,9 +19,9 @@ public class CommonController {
   private final S3Uploader uploader;
 
   @PostMapping("/img")
-  public ResponseEntity<?> upload(
+  public ResponseDto upload(
     @RequestParam("img") MultipartFile img
     ) throws IOException {
-    return ResponseEntity.ok(uploader.upload(img));
+    return ResponseUtil.getSuccessResponse(uploader.upload(img));
   }
 }

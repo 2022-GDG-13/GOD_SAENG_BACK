@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "daily_task")
+@Table(name = "post_task_relation")
 @Getter
 @NoArgsConstructor
 public class DailyTaskEntity {

@@ -1,27 +1,15 @@
 package com.gdg.group13.task;
 
-import java.time.LocalDate;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.gdg.group13.common.ResponseDto;
 import com.gdg.group13.common.ResponseUtil;
 import com.gdg.group13.task.dto.request.TaskMakeRequestDto;
 import com.gdg.group13.task.dto.request.TaskUpdateRequestDto;
 import com.gdg.group13.task.service.DailyTaskProvider;
+import com.gdg.group13.task.service.InquiryDailyTodoList;
 import com.gdg.group13.task.service.TaskMaker;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -42,10 +30,9 @@ public class TaskController {
 
   @GetMapping("/daily")
   public ResponseDto getDailyTask(
-
-    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
+    @RequestBody InquiryDailyTodoList request
   ) {
-    return ResponseUtil.successResponse(dailyTaskProvider.getDailyTask(date));
+    return ResponseUtil.successResponse(dailyTaskProvider.getDailyTodoList(request));
   }
 
   @GetMapping("/{id}")
@@ -61,4 +48,5 @@ public class TaskController {
   @DeleteMapping("/{id}")
   public ResponseDto deleteTask(@PathVariable("id") Integer taskId) {
     return ResponseUtil.successResponse(taskMaker.deleteTask(taskId));
-  }}
+  }
+}

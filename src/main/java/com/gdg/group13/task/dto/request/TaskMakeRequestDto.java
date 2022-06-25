@@ -9,6 +9,7 @@ import lombok.Getter;
 @Getter
 public class TaskMakeRequestDto {
 
+  private Integer uid;
   private String title;
   private String description;
   private String imageUrl;

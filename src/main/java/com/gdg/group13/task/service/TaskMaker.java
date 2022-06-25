@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import com.gdg.group13.task.TaskEntity;
 import com.gdg.group13.task.TaskRepository;
+import com.gdg.group13.task.TodoListEntity;
+import com.gdg.group13.task.TodoListRepository;
 import com.gdg.group13.task.dto.request.TaskMakeRequestDto;
 import com.gdg.group13.task.dto.request.TaskUpdateRequestDto;
 import com.gdg.group13.task.dto.response.TaskSingleResponseDto;
@@ -15,13 +17,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TaskMaker {
 
+  private final TodoListRepository todoListRepository;
   private final TaskRepository taskRepository;
 
   public TaskEntity make(TaskMakeRequestDto request) {
+    TodoListEntity dailyTodoList = todoListRepository.findByUidAndDate(request.getUid(), LocalDate.now());
     var taskEntity = taskRepository.save(
-        new TaskEntity(LocalDate.now(), request.getTitle(), request.getDescription(), request.getImageUrl(), true,
-            request.getTag()
-        ));
+      new TaskEntity(dailyTodoList.getId(), request.getTitle(), request.getDescription(), request.getImageUrl(), true,
+        request.getTag()
+      ));
 
     return taskEntity;
   }

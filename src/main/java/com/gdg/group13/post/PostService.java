@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -70,14 +71,12 @@ public class PostService {
 
     var memberEntity = memberRepository.findById(postEntity.getUid());
 
-    // task
     List<Integer> taskIds = postTaskRelationRepository.findAllByPostId(postEntity.getId())
         .stream().map(it -> it.getTaskId())
         .collect(Collectors.toList());
 
     List<TaskEntity> taskEntityList = taskRepository.findAllById(taskIds);
 
-    // tag
     Set<Tag> collect = taskEntityList
         .stream()
         .map(TaskEntity::getTag)
@@ -114,41 +113,31 @@ public class PostService {
         Collectors.toMap(MemberEntity::getId, MemberEntity::getName)
       );
 
-    // 태그 모두 조회
-    // post, task
     Set<Integer> postIdSets = postList.stream()
         .map(PostEntity::getId)
         .collect(Collectors.toSet());
 
     List<PostTaskRelationEntity> taskRelations = postTaskRelationRepository.findAllById(postIdSets);
 
-    // task post
-    // 1    2
-    // 2    2
-    // 2    3
-    // 2    4
-
     Map<Integer, List<PostTaskRelationEntity>> collect = taskRelations.stream()
         .collect(Collectors.groupingBy(PostTaskRelationEntity::getPostId));
 
+    Map<Integer, Set<Tag>> tmpMap = new HashMap<>();
+    for (Integer key : collect.keySet()) {
+      Set<Integer> set = collect.get(key)
+          .stream()
+          .map(PostTaskRelationEntity::getTaskId)
+          .collect(Collectors.toSet());
+      Set<Tag> tags = taskRepository.findAllById(set).stream()
+          .map(TaskEntity::getTag).collect(Collectors.toSet());
+      tmpMap.put(key, tags);
+    }
 
+    List<PostEntity> allById = postRepository.findAllById(tmpMap.keySet());
 
-    Set<Integer> taskId = taskRelations
-        .stream().map(tR -> tR.getTaskId())
-        .collect(Collectors.toSet());
-
-    List<TaskEntity> taskEntities = taskRepository.findAllById(taskId);
-
-
-
-
-    Set<Tag> tags = taskEntities.stream()
-        .map(TaskEntity::getTag)
-        .collect(Collectors.toSet());
-
-    return postList.stream()
-      .map(it -> new PostListDto(it, godSaengSet.contains(it.getId()), memberIdMap.get(it.getUid())))
-      .collect(Collectors.toList());
+    return allById.stream()
+      .map(it -> new PostListDto(it, godSaengSet.contains(it.getId()), memberIdMap.get(it.getUid()), tmpMap.get(it.getId())))
+        .collect(Collectors.toList());
   }
 
 }

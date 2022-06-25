@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class TaskMaker {
+public class TaskService {
 
   private final TodoListRepository todoListRepository;
   private final TaskRepository taskRepository;

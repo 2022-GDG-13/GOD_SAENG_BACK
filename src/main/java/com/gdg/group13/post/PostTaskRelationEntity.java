@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Table(name = "post_task_relation")
 @Getter
 @NoArgsConstructor
-public class DailyTaskEntity {
+public class PostTaskRelationEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class DailyTaskEntity {
 
   private Integer taskId;
 
-  public DailyTaskEntity(Integer postId, Integer taskId) {
+  public PostTaskRelationEntity(Integer postId, Integer taskId) {
     this.postId = postId;
     this.taskId = taskId;
   }

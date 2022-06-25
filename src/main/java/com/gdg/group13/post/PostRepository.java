@@ -2,7 +2,10 @@ package com.gdg.group13.post;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PostRepository extends JpaRepository<PostEntity, Long> {
+import java.util.List;
+
+public interface PostRepository extends JpaRepository<PostEntity, Integer> {
+//  List<PostEntity> findAllByIdIn(List<Integer> postIdList);
 }
 
 

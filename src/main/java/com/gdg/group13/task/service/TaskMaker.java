@@ -31,13 +31,13 @@ public class TaskMaker {
   }
 
   public TaskSingleResponseDto findSingleTask(Integer taskId) {
-    TaskEntity task = taskRepository.findById(Long.valueOf(taskId))
+    TaskEntity task = taskRepository.findById(taskId)
         .orElseThrow(() -> new IllegalStateException("없는 task id 입니다."));
     return new TaskSingleResponseDto(task);
   }
 
   public TaskSingleResponseDto updateTask(Integer taskId, TaskUpdateRequestDto taskUpdateRequestDto) {
-    TaskEntity task = taskRepository.findById(Long.valueOf(taskId))
+    TaskEntity task = taskRepository.findById(taskId)
         .orElseThrow(() -> new IllegalStateException("없는 task id 입니다."));
 
     task.setTitle(taskUpdateRequestDto.getTitle());
@@ -49,7 +49,7 @@ public class TaskMaker {
   }
 
   public Integer deleteTask(Integer taskId) {
-    taskRepository.deleteById(Long.valueOf(taskId));
+    taskRepository.deleteById(taskId);
     return taskId;
   }
 }

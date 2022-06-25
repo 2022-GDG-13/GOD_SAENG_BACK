@@ -2,6 +2,7 @@ package com.gdg.group13.post;
 
 import com.gdg.group13.common.ResponseDto;
 import com.gdg.group13.common.ResponseUtil;
+import com.gdg.group13.task.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,8 @@ public class PostController {
 
   @GetMapping("/rank")
   public ResponseDto rank(
+    @RequestParam Tag tag
   ) {
-    return ResponseUtil.successResponse(postRankingProvider.getRanking());
+    return ResponseUtil.successResponse(postRankingProvider.getRanking(tag));
   }
 }

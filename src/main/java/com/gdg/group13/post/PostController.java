@@ -28,4 +28,17 @@ public class PostController {
   ) {
     return ResponseUtil.successResponse(postService.getRanking(tag));
   }
+
+  @GetMapping("")
+  public ResponseDto allPost(
+  ) {
+    return ResponseUtil.successResponse(postService.findAllPost());
+  }
+
+  @GetMapping("/{id}")
+  public ResponseDto inquirySinglePost(
+    @PathVariable Integer id
+  ) {
+    return ResponseUtil.successResponse(postService.findSinglePost(id));
+  }
 }

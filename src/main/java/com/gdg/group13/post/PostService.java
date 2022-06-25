@@ -5,6 +5,7 @@ import com.gdg.group13.task.Tag;
 import com.gdg.group13.task.TaskEntity;
 import com.gdg.group13.task.TaskRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -55,10 +56,8 @@ public class PostService {
   }
 
   public List<PostEntity> findAllPost(){
-    return postRepository.findAll();
+    return postRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
   }
-
-
 
 }
 

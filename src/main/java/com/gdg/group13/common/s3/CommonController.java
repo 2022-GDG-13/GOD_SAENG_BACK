@@ -22,6 +22,6 @@ public class CommonController {
   public ResponseDto upload(
     @RequestParam("img") MultipartFile img
     ) throws IOException {
-    return ResponseUtil.getSuccessResponse(uploader.upload(img));
+    return ResponseUtil.successResponse(uploader.upload(img));
   }
 }

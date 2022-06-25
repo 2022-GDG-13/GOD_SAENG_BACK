@@ -20,8 +20,6 @@ public class TaskController {
   public ResponseDto makeTask(
     @RequestBody TaskMakeRequestDto request
   ) {
-    System.out.println(taskMaker.make(request));
-
-    return ResponseUtil.getSuccessResponse(taskMaker.make(request));
+    return ResponseUtil.successResponse(taskMaker.make(request));
   }
 }

@@ -41,7 +41,7 @@ public class PostService {
   //todo :: 며칠 기준으로 가져올건지 필터 추가 할 것
   List<PostListDto> getRanking(Tag tag) {
     List<TaskEntity> taskList;
-    if (tag != null){
+    if (tag == null){
       taskList = taskRepository.findAll();
     } else {
       taskList = taskRepository.findByTag(tag);

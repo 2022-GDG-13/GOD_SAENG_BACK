@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface TodoListRepository extends JpaRepository<TodoListEntity, Integer> {
   TodoListEntity findByUidAndDate(Integer uid, LocalDate date);
+  List<TodoListEntity> findByUid(Integer uid);
 }

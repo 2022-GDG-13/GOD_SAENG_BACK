@@ -49,4 +49,10 @@ public class TaskController {
   public ResponseDto deleteTask(@PathVariable("id") Integer taskId) {
     return ResponseUtil.successResponse(taskService.deleteTask(taskId));
   }
+
+
+  @GetMapping("/god-saeng")
+  public ResponseDto inquiryGodSaengList(@RequestParam Integer uid) {
+    return ResponseUtil.successResponse(dailyTaskProvider.monthGodSaengList(uid));
+  }
 }

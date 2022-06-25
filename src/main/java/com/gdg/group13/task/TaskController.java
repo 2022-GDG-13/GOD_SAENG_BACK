@@ -26,7 +26,6 @@ public class TaskController {
   public ResponseDto makeTask(
     @RequestBody TaskMakeRequestDto request
   ) {
-    System.out.println(taskService.make(request));
     return ResponseUtil.successResponse(taskService.make(request));
   }
 

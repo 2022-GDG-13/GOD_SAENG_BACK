@@ -100,7 +100,10 @@ public class PostService {
 
   private List<PostListDto> convertPostListResponse(List<PostEntity> postList) {
     Set<Integer> godSaengSet = postList.stream()
-      .filter(it -> todoListRepository.findByUidAndDate(it.getUid(), it.getDate()).isPresent())
+      .filter(it -> {
+        var TOdoEntity = todoListRepository.findByUidAndDate(it.getUid(), it.getDate());
+        return TOdoEntity.isPresent() && TOdoEntity.get().getGodSaeng() == true;
+      })
       .map(it -> it.getId())
       .collect(Collectors.toSet());
 

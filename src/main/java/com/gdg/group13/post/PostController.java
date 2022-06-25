@@ -24,7 +24,7 @@ public class PostController {
 
   @GetMapping("/rank")
   public ResponseDto rank(
-    @RequestParam Tag tag
+    @RequestParam(required = false) Tag tag
   ) {
     return ResponseUtil.successResponse(postService.getRanking(tag));
   }

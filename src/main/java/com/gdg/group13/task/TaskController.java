@@ -60,4 +60,9 @@ public class TaskController {
   public ResponseDto fixCheckStatus(@RequestParam Integer taskId) {
     return ResponseUtil.successResponse(taskService.fixCheckBox(taskId));
   }
+
+  @GetMapping("god-saeng/rate")
+  public ResponseDto inquiryGodSaengRate(@RequestParam Integer uid) {
+    return ResponseUtil.successResponse(dailyTaskProvider.getGodSaengRate(uid));
+  }
 }

@@ -8,6 +8,7 @@ import com.gdg.group13.task.dto.request.InquiryDailyTodoListRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,15 @@ public class DailyTaskProvider {
       .filter(it -> it.getGodSaeng())
       .map(it -> it.getDate().getDayOfMonth())
       .collect(Collectors.toList());
+  }
+
+  public long getGodSaengRate(Integer uid){
+    var godSaengCount = todoListRepository.findByUid(uid)
+      .stream()
+      .filter(it -> it.getGodSaeng())
+      .collect(Collectors.toSet()).size();
+
+    return Math.round(100.0 * godSaengCount / LocalDate.now().getDayOfMonth());
   }
 }
 

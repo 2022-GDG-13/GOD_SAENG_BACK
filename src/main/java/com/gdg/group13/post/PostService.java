@@ -56,12 +56,12 @@ public class PostService {
       .collect(Collectors.toSet());
 
 
-    List<PostEntity> postList = postRepository.findByIdInOrderByLikeCntDesc(new ArrayList(postIdList));
+    List<PostEntity> postList = postRepository.findByIdInOrderByLikeCntDesc(new ArrayList<>(postIdList));
 
     return convertPostListResponse(postList);
   }
 
-  public PostListDto findSinglePost(Integer postId) {
+  public PostSingleDto findSinglePost(Integer postId) {
     PostEntity postEntity = postRepository.findById(postId)
       .orElseThrow(() -> new IllegalStateException("없는 post id 입니다."));
 
@@ -70,13 +70,26 @@ public class PostService {
 
     var memberEntity = memberRepository.findById(postEntity.getUid());
 
+    // task
+    List<Integer> taskIds = postTaskRelationRepository.findAllByPostId(postEntity.getId())
+        .stream().map(it -> it.getTaskId())
+        .collect(Collectors.toList());
+
+    List<TaskEntity> taskEntityList = taskRepository.findAllById(taskIds);
+
+    // tag
+    Set<Tag> collect = taskEntityList
+        .stream()
+        .map(TaskEntity::getTag)
+        .collect(Collectors.toSet());
+
     String userName;
     if (memberEntity.isPresent()) {
       userName = memberEntity.get().getName();
     } else {
       userName = "갓생이";
     }
-    return new PostListDto(postEntity, todoListEntity.getGodSaeng(), userName);
+    return new PostSingleDto(postEntity, todoListEntity.getGodSaeng(), userName, taskEntityList, collect);
 
   }
 
@@ -101,6 +114,37 @@ public class PostService {
         Collectors.toMap(MemberEntity::getId, MemberEntity::getName)
       );
 
+    // 태그 모두 조회
+    // post, task
+    Set<Integer> postIdSets = postList.stream()
+        .map(PostEntity::getId)
+        .collect(Collectors.toSet());
+
+    List<PostTaskRelationEntity> taskRelations = postTaskRelationRepository.findAllById(postIdSets);
+
+    // task post
+    // 1    2
+    // 2    2
+    // 2    3
+    // 2    4
+
+    Map<Integer, List<PostTaskRelationEntity>> collect = taskRelations.stream()
+        .collect(Collectors.groupingBy(PostTaskRelationEntity::getPostId));
+
+
+
+    Set<Integer> taskId = taskRelations
+        .stream().map(tR -> tR.getTaskId())
+        .collect(Collectors.toSet());
+
+    List<TaskEntity> taskEntities = taskRepository.findAllById(taskId);
+
+
+
+
+    Set<Tag> tags = taskEntities.stream()
+        .map(TaskEntity::getTag)
+        .collect(Collectors.toSet());
 
     return postList.stream()
       .map(it -> new PostListDto(it, godSaengSet.contains(it.getId()), memberIdMap.get(it.getUid())))

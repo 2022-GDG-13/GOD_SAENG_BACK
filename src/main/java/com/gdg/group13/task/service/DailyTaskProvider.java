@@ -20,7 +20,12 @@ public class DailyTaskProvider {
   private final TaskRepository taskRepository;
 
   public List<TaskEntity> getDailyTodoList(InquiryDailyTodoListRequest request) {
-    TodoListEntity todoListEntity = todoListRepository.findByUidAndDate(request.getUid(), request.getDate());
+    TodoListEntity todoListEntity = todoListRepository.findByUidAndDate(request.getUid(), LocalDate.now())
+        .orElseGet(() -> {
+          TodoListEntity todoList = new TodoListEntity(request.getUid(), LocalDate.now());
+          return todoListRepository.save(todoList);
+        });
+
     return taskRepository.findByTodoId(todoListEntity.getId());
   }
 

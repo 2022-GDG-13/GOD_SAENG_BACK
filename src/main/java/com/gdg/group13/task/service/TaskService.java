@@ -23,9 +23,14 @@ public class TaskService {
   private final TaskRepository taskRepository;
 
   public TaskEntity make(TaskMakeRequestDto request) {
-    TodoListEntity dailyTodoList = todoListRepository.findByUidAndDate(request.getUid(), LocalDate.now());
+    TodoListEntity dailyTodoList = todoListRepository.findByUidAndDate(request.getUid(), LocalDate.now())
+        .orElseGet(() -> {
+          TodoListEntity todoList = new TodoListEntity(request.getUid(), LocalDate.now());
+          return todoListRepository.save(todoList);
+        });
+
     var taskEntity = taskRepository.save(
-      new TaskEntity(dailyTodoList.getId(), request.getTitle(), request.getDescription(), request.getImageUrl(), true,
+      new TaskEntity(dailyTodoList.getId(), request.getTitle(), request.getDescription(), request.getImageUrl(), false,
         request.getTag()
       ));
 

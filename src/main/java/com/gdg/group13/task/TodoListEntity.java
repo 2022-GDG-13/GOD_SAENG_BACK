@@ -1,6 +1,7 @@
 package com.gdg.group13.task;
 
 
+import com.gdg.group13.common.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @Table(name = "todo_list")
-public class TodoListEntity {
+public class TodoListEntity  extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

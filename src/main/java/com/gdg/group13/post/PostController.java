@@ -13,20 +13,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/post")
 public class PostController {
 
-  private final PostMaker postMaker;
-  private final PostRankingProvider postRankingProvider;
+  private final PostService postService;
 
   @PostMapping
   public ResponseDto makePost(
     @RequestBody PostMakeRequestDto request
   ) {
-    return ResponseUtil.successResponse(postMaker.make(request));
+    return ResponseUtil.successResponse(postService.make(request));
   }
 
   @GetMapping("/rank")
   public ResponseDto rank(
     @RequestParam Tag tag
   ) {
-    return ResponseUtil.successResponse(postRankingProvider.getRanking(tag));
+    return ResponseUtil.successResponse(postService.getRanking(tag));
   }
 }

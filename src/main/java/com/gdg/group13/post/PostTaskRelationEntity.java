@@ -1,5 +1,6 @@
 package com.gdg.group13.post;
 
+import com.gdg.group13.common.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "post_task_relation")
 @Getter
 @NoArgsConstructor
-public class PostTaskRelationEntity {
+public class PostTaskRelationEntity extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

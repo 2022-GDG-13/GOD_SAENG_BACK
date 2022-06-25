@@ -2,6 +2,7 @@ package com.gdg.group13.task;
 
 import java.time.LocalDate;
 
+import com.gdg.group13.common.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Table(name = "task")
-public class TaskEntity {
+public class TaskEntity extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

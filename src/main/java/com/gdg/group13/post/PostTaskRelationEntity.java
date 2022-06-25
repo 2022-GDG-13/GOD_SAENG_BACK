@@ -3,6 +3,7 @@ package com.gdg.group13.post;
 import com.gdg.group13.common.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Table(name = "post_task_relation")
 @Getter
 @NoArgsConstructor
+@ToString
 public class PostTaskRelationEntity extends BaseEntity {
 
   @Id

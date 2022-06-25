@@ -117,10 +117,11 @@ public class PostService {
         .map(PostEntity::getId)
         .collect(Collectors.toSet());
 
-    List<PostTaskRelationEntity> taskRelations = postTaskRelationRepository.findAllById(postIdSets);
+    List<PostTaskRelationEntity> taskRelations = postTaskRelationRepository.findAllByPostIdIn(postIdSets);
 
     Map<Integer, List<PostTaskRelationEntity>> collect = taskRelations.stream()
         .collect(Collectors.groupingBy(PostTaskRelationEntity::getPostId));
+
 
     Map<Integer, Set<Tag>> tmpMap = new HashMap<>();
     for (Integer key : collect.keySet()) {
@@ -133,9 +134,7 @@ public class PostService {
       tmpMap.put(key, tags);
     }
 
-    List<PostEntity> allById = postRepository.findAllById(tmpMap.keySet());
-
-    return allById.stream()
+    return postList.stream()
       .map(it -> new PostListDto(it, godSaengSet.contains(it.getId()), memberIdMap.get(it.getUid()), tmpMap.get(it.getId())))
         .collect(Collectors.toList());
   }

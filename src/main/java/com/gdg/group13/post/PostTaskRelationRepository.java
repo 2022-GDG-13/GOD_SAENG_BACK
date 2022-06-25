@@ -8,6 +8,8 @@ import java.util.Set;
 public interface PostTaskRelationRepository extends JpaRepository<PostTaskRelationEntity, Integer> {
     List<PostTaskRelationEntity> findAllByPostId(Integer id);
 
+    List<PostTaskRelationEntity> findAllByPostIdIn(Set<Integer> postIdSets);
+
     // void findAllByPostIds();
     //  List<PostTaskRelationEntity> find1(List<Integer> taskIdList);
 }

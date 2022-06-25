@@ -40,9 +40,9 @@ public class TaskController {
     return ResponseUtil.successResponse(taskService.findSingleTask(taskId));
   }
 
-  @PutMapping("/{id}")
-  public ResponseDto updateTask(@PathVariable("id") Integer taskId, @RequestBody TaskUpdateRequestDto taskUpdateRequestDto) {
-    return ResponseUtil.successResponse(taskService.updateTask(taskId, taskUpdateRequestDto));
+  @PutMapping
+  public ResponseDto updateTask(@RequestBody TaskUpdateRequestDto taskUpdateRequestDto) {
+    return ResponseUtil.successResponse(taskService.updateTask(taskUpdateRequestDto));
   }
 
   @DeleteMapping("/{id}")

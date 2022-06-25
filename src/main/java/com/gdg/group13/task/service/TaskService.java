@@ -36,8 +36,8 @@ public class TaskService {
     return new TaskSingleResponseDto(task);
   }
 
-  public TaskSingleResponseDto updateTask(Integer taskId, TaskUpdateRequestDto taskUpdateRequestDto) {
-    TaskEntity task = taskRepository.findById(taskId)
+  public TaskSingleResponseDto updateTask(TaskUpdateRequestDto taskUpdateRequestDto) {
+    TaskEntity task = taskRepository.findById(taskUpdateRequestDto.getTaskId())
         .orElseThrow(() -> new IllegalStateException("없는 task id 입니다."));
 
     task.setTitle(taskUpdateRequestDto.getTitle());

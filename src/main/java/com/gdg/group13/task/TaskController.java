@@ -55,4 +55,9 @@ public class TaskController {
   public ResponseDto inquiryGodSaengList(@RequestParam Integer uid) {
     return ResponseUtil.successResponse(dailyTaskProvider.monthGodSaengList(uid));
   }
+
+  @PatchMapping("/check")
+  public ResponseDto fixCheckStatus(@RequestParam Integer taskId) {
+    return ResponseUtil.successResponse(taskService.fixCheckBox(taskId));
+  }
 }

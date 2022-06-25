@@ -1,7 +1,5 @@
 package com.gdg.group13.task.service;
 
-import java.time.LocalDate;
-
 import com.gdg.group13.task.TaskEntity;
 import com.gdg.group13.task.TaskRepository;
 import com.gdg.group13.task.TodoListEntity;
@@ -9,9 +7,10 @@ import com.gdg.group13.task.TodoListRepository;
 import com.gdg.group13.task.dto.request.TaskMakeRequestDto;
 import com.gdg.group13.task.dto.request.TaskUpdateRequestDto;
 import com.gdg.group13.task.dto.response.TaskSingleResponseDto;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +27,14 @@ public class TaskService {
       ));
 
     return taskEntity;
+  }
+
+  public TaskEntity fixCheckBox(Integer taskId){
+    var taskEntity = taskRepository.findById(taskId)
+      .orElseThrow(() -> new IllegalStateException("없는 task id 입니다."));
+
+    taskEntity.setCheckBox(!taskEntity.getCheckBox());
+    return taskRepository.save(taskEntity);
   }
 
   public TaskSingleResponseDto findSingleTask(Integer taskId) {

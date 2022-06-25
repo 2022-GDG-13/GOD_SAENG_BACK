@@ -19,17 +19,18 @@ public class PostRankingProvider {
   private final PostRepository postRepository;
 
   //todo :: 며칠 기준으로 가져올건지 필터 추가 할 것
-   List<PostEntity> getRanking(Tag tag) {
+  List<PostEntity> getRanking(Tag tag) {
     List<TaskEntity> taskList = taskRepository.findByTag(tag);
 
     var postIdList = postTaskRelationRepository.findAllById(
-      taskList.stream()
-        .map(it -> it.getId()).collect(Collectors.toList())
-    )
+        taskList.stream()
+          .map(it -> it.getId()).collect(Collectors.toList())
+      )
       .stream()
-      .map(it -> it.getId())
+      .map(it -> it.getPostId())
       .collect(Collectors.toSet());
 
-     return postRepository.findAllById(postIdList);
+
+    return postRepository.findByIdInOrderByLikeCntDesc(new ArrayList(postIdList));
   }
 }

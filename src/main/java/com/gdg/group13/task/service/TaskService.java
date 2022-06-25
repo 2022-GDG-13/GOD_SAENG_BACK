@@ -87,6 +87,7 @@ public class TaskService {
     } else {
       todoListEntity.changeFalse();
     }
+    todoListRepository.save(todoListEntity);
   }
 }
 

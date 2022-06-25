@@ -11,7 +11,11 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "todo_list")
+@Table(name = "todo_list",
+  indexes = {
+  @Index(name = "i_uid", columnList = "uid"),
+  @Index(name = "i_date", columnList = "date")
+})
 public class TodoListEntity  extends BaseEntity {
 
   @Id

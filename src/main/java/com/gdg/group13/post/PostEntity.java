@@ -10,7 +10,10 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "post")
+@Table(name = "post", indexes = {
+  @Index(name = "i_uid", columnList = "uid"),
+  @Index(name = "i_date", columnList = "date"),
+})
 public class PostEntity  extends BaseEntity {
 
     @Id

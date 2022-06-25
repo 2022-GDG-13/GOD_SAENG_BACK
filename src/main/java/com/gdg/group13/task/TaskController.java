@@ -5,11 +5,13 @@ import com.gdg.group13.common.ResponseUtil;
 import com.gdg.group13.task.dto.request.TaskMakeRequestDto;
 import com.gdg.group13.task.dto.request.TaskUpdateRequestDto;
 import com.gdg.group13.task.service.DailyTaskProvider;
-import com.gdg.group13.task.dto.request.InquiryDailyTodoListRequest;
 import com.gdg.group13.task.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @Slf4j
 @RestController
@@ -30,9 +32,10 @@ public class TaskController {
 
   @GetMapping("/daily")
   public ResponseDto getDailyTask(
-    @RequestBody InquiryDailyTodoListRequest request
-  ) {
-    return ResponseUtil.successResponse(dailyTaskProvider.getDailyTodoList(request));
+    @RequestParam Integer uid,
+    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
+    ) {
+    return ResponseUtil.successResponse(dailyTaskProvider.getDailyTodoList(uid, date));
   }
 
   @GetMapping("/{id}")

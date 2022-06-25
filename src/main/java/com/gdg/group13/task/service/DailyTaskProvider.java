@@ -4,7 +4,6 @@ import com.gdg.group13.task.TaskEntity;
 import com.gdg.group13.task.TaskRepository;
 import com.gdg.group13.task.TodoListEntity;
 import com.gdg.group13.task.TodoListRepository;
-import com.gdg.group13.task.dto.request.InquiryDailyTodoListRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +18,10 @@ public class DailyTaskProvider {
   private final TodoListRepository todoListRepository;
   private final TaskRepository taskRepository;
 
-  public List<TaskEntity> getDailyTodoList(InquiryDailyTodoListRequest request) {
-    TodoListEntity todoListEntity = todoListRepository.findByUidAndDate(request.getUid(), LocalDate.now())
+  public List<TaskEntity> getDailyTodoList(Integer uid, LocalDate date) {
+    TodoListEntity todoListEntity = todoListRepository.findByUidAndDate(uid, LocalDate.now())
         .orElseGet(() -> {
-          TodoListEntity todoList = new TodoListEntity(request.getUid(), LocalDate.now());
+          TodoListEntity todoList = new TodoListEntity(uid, LocalDate.now());
           return todoListRepository.save(todoList);
         });
 

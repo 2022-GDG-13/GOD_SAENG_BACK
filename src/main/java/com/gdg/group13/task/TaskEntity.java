@@ -1,5 +1,7 @@
 package com.gdg.group13.task;
 
+import java.time.LocalDate;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,21 +17,23 @@ public class TaskEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer todoId;
-
+    private LocalDate date;
     private String title;
-
+    private String description;
+    private String imageUrl;
     private Boolean checkBox;
 
     @Enumerated(value = EnumType.STRING)
     private Tag tag;
 
-    public TaskEntity(Integer todoId, String title, Boolean checkBox, Tag tag) {
-        this.todoId = todoId;
+    public TaskEntity(LocalDate date, String title, String description, String imageUrl, Boolean checkBox,
+        Tag tag) {
+        this.date = date;
         this.title = title;
+        this.description = description;
+        this.imageUrl = imageUrl;
         this.checkBox = checkBox;
         this.tag = tag;
     }
-
 }
 

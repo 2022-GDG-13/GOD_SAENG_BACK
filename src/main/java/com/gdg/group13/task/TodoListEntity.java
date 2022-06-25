@@ -38,6 +38,7 @@ public class TodoListEntity  extends BaseEntity {
 
   public TodoListEntity(Integer uid, LocalDate date) {
     this.uid = uid;
+    this.godSaeng = false;
     this.date = date;
   }
 }

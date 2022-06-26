@@ -43,8 +43,8 @@ public class TaskService {
     var taskEntity = taskRepository.findById(taskId)
       .orElseThrow(() -> new IllegalStateException("없는 task id 입니다."));
 
-    updateGodSaengStatus(taskEntity.getTodoId());
     taskEntity.setCheckBox(!taskEntity.getCheckBox());
+    updateGodSaengStatus(taskEntity.getTodoId());
     return taskRepository.save(taskEntity);
   }
 

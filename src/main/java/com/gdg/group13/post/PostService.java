@@ -48,7 +48,8 @@ public class PostService {
       taskList = taskRepository.findByTag(tag);
     }
 
-    var postIdList = postTaskRelationRepository.findAllById(
+    System.out.println("taskList = " + taskList.size());
+    var postIdList = postTaskRelationRepository.findAllByTaskIdIn(
         taskList.stream()
           .map(it -> it.getId()).collect(Collectors.toList())
       )
@@ -59,6 +60,7 @@ public class PostService {
 
     List<PostEntity> postList = postRepository.findByIdInOrderByLikeCntDesc(new ArrayList<>(postIdList));
 
+    System.out.println("postList = " + postList.size());
     return convertPostListResponse(postList);
   }
 

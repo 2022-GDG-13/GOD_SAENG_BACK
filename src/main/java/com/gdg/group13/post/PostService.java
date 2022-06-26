@@ -48,7 +48,6 @@ public class PostService {
       taskList = taskRepository.findByTag(tag);
     }
 
-    System.out.println("taskList = " + taskList.size());
     var postIdList = postTaskRelationRepository.findAllByTaskIdIn(
         taskList.stream()
           .map(it -> it.getId()).collect(Collectors.toList())
